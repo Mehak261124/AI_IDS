@@ -208,7 +208,7 @@ npm install
 ## 📚 Documentation
 
 - **Detailed Documentation**: See [CODEBASE_SUMMARY.md](CODEBASE_SUMMARY.md)
-- **Project Report**: See [project_report]([https://udita-0707.github.io/AI_IDS/project_report.html])
+- **Project Report**: See [project_report](https://udita-0707.github.io/AI_IDS/project_report.html)
 - **API Docs**: `http://localhost:8000/docs` (when server is running)
 
 ---
