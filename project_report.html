@@ -598,11 +598,11 @@
 
             <div class="image-row">
                 <div class="image-row-item">
-                    <img src="final_preprocessed_data/stats_visualizations/binary_class_dist.png" alt="Binary Class Distribution" style="height: 300px; object-fit: contain;">
+                    <img src="assets/binary_class_dist.png" alt="Binary Class Distribution" style="height: 300px; object-fit: contain;">
                     <div class="caption">Figure 1: Balanced Binary Class Distribution (After Oversampling)</div>
                 </div>
                 <div class="image-row-item">
-                    <img src="final_preprocessed_data/stats_visualizations/multiclass_class_dist.png" alt="Multiclass Class Distribution" style="height: 300px; object-fit: contain;">
+                    <img src="assets/multiclass_class_dist.png" alt="Multiclass Class Distribution" style="height: 300px; object-fit: contain;">
                     <div class="caption">Figure 2: Multiclass Class Distribution (After Capping at 60k per class)</div>
                 </div>
             </div>
@@ -681,19 +681,19 @@
             <h3>Binary Model Performance Matrices</h3>
             <div class="image-row-2x2">
                 <div class="image-grid-item">
-                    <img src="preprocessed_binary_10k/plots_model/decision_tree.png" alt="Decision Tree Performance Metrics">
+                    <img src="assets/decision_tree.png" alt="Decision Tree Performance Metrics">
                     <div class="caption">Decision Tree Performance Metrics</div>
                 </div>
                 <div class="image-grid-item">
-                    <img src="preprocessed_binary_10k/plots_model/random_forest.png" alt="Random Forest Performance Metrics">
+                    <img src="assets/random_forest.png" alt="Random Forest Performance Metrics">
                     <div class="caption">Random Forest Performance Metrics</div>
                 </div>
                 <div class="image-grid-item">
-                    <img src="preprocessed_binary_10k/plots_model/svm.png" alt="SVM Performance Metrics">
+                    <img src="assets/svm.png" alt="SVM Performance Metrics">
                     <div class="caption">SVM (RBF) Performance Metrics</div>
                 </div>
                 <div class="image-grid-item">
-                    <img src="preprocessed_binary_10k/plots_model/xgboost.png" alt="XGBoost Performance Metrics">
+                    <img src="assets/xgboost.png" alt="XGBoost Performance Metrics">
                     <div class="caption">XGBoost Performance Metrics</div>
                 </div>
             </div>
@@ -736,17 +736,17 @@
             <h3>Multiclass Model Performance Matrices</h3>
             <div class="image-row" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="image-row-item">
-                    <img src="preprocessed_multiclass_20k/plots_model/xgboost_multiclass_results/performance_metrics.png" alt="XGBoost Multiclass Performance" style="height: 300px; object-fit: contain;">
+                    <img src="assets/xgboost_multiclass.png" alt="XGBoost Multiclass Performance" style="height: 300px; object-fit: contain;">
                     <div class="caption">XGBoost Performance Metrics</div>
                     <p style="margin-top: 10px; font-size: 0.9em; color: #555; text-align: left;">XGBoost achieved the highest accuracy (97.5%) among all multiclass models, demonstrating superior capability in distinguishing between similar attack types such as DoS variants. The gradient boosting approach effectively captures complex feature interactions that are critical for accurate attack classification.</p>
                 </div>
                 <div class="image-row-item">
-                    <img src="preprocessed_multiclass_20k/plots_model/random_forest_multiclass_results/performance_metrics.png" alt="Random Forest Multiclass Performance" style="height: 300px; object-fit: contain;">
+                    <img src="assets/random_forest_multiclass.png" alt="Random Forest Multiclass Performance" style="height: 300px; object-fit: contain;">
                     <div class="caption">Random Forest Performance Metrics</div>
                     <p style="margin-top: 10px; font-size: 0.9em; color: #555; text-align: left;">Random Forest achieved strong performance (96.8%) with good generalization capabilities. However, it showed some confusion between similar DoS attack variants (Hulk vs GoldenEye), indicating that ensemble averaging alone may not capture the fine-grained differences needed for precise attack type identification.</p>
                 </div>
                 <div class="image-row-item">
-                    <img src="preprocessed_multiclass_20k/plots_model/tabnet_multiclass_results/performance_metrics.png" alt="TabNet Multiclass Performance" style="height: 300px; object-fit: contain;">
+                    <img src="assets/tabnet_multiclass.png" alt="TabNet Multiclass Performance" style="height: 300px; object-fit: contain;">
                     <div class="caption">TabNet Performance Metrics</div>
                     <p style="margin-top: 10px; font-size: 0.9em; color: #555; text-align: left;">TabNet, despite being a sophisticated deep learning architecture designed for tabular data, underperformed with 88.5% accuracy. The complex neural network architecture struggled to learn meaningful patterns from network flow features, suggesting that tree-based methods are more suitable for this structured network traffic data.</p>
                 </div>
@@ -760,7 +760,7 @@
             <h3>🔄 System Pipeline</h3>
             
             <div class="image-container">
-                <img src="image.png" alt="System Pipeline Diagram" style="max-width: 800px;">
+                <img src="assets/system_architecture.png" alt="System Pipeline Diagram" style="max-width: 800px;">
                 <div class="caption">Figure 4: Complete System Pipeline - From PCAP Input to Attack Classification</div>
             </div>
 
@@ -835,11 +835,11 @@
 
             <div class="image-row">
                 <div class="image-row-item">
-                    <img src="final_preprocessed_data/pca_visualizations/viz_pca_scatter_binary.png" alt="PCA Scatter Binary">
+                    <img src="assets/pca_scatter_binary.png" alt="PCA Scatter Binary">
                     <div class="caption">Figure 5: PCA Scatter Plot (Binary) - Shows separation between Benign and Attack traffic</div>
                 </div>
                 <div class="image-row-item">
-                    <img src="final_preprocessed_data/pca_visualizations/viz_pca_scatter_multiclass.png" alt="PCA Scatter Multiclass">
+                    <img src="assets/pca_scatter_multiclass.png" alt="PCA Scatter Multiclass">
                     <div class="caption">Figure 6: PCA Scatter Plot (Multiclass) - Shows that attacks form distinct clusters in 2D space, proving they are separable</div>
                 </div>
             </div>
@@ -873,15 +873,15 @@
             <h3>Model Performance Curves</h3>
             <div class="image-grid">
                 <div class="image-grid-item">
-                    <img src="final_preprocessed_data/plot_models/binary/xgb_roc_curve.png" alt="Binary ROC Curve">
+                    <img src="assets/binary_roc_curve.png" alt="Binary ROC Curve">
                     <div class="caption">Binary XGBoost ROC Curve</div>
                 </div>
                 <div class="image-grid-item">
-                    <img src="final_preprocessed_data/plot_models/multiclass_xgb/xgb_multiclass_roc_micro.png" alt="Multiclass ROC Curve">
+                    <img src="assets/multiclass_roc_curve.png" alt="Multiclass ROC Curve">
                     <div class="caption">Multiclass XGBoost ROC Curve</div>
                 </div>
                 <div class="image-grid-item">
-                    <img src="final_preprocessed_data/plot_models/anomaly/autoencoder_loss_curve.png" alt="Autoencoder Loss Curve">
+                    <img src="assets/autoencoder_loss_curve.png" alt="Autoencoder Loss Curve">
                     <div class="caption">Autoencoder Training Loss Curve</div>
                 </div>
             </div>
