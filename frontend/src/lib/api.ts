@@ -6,8 +6,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000
 
 export interface ApiHealthResponse {
   status: string;
-  timestamp: number;
-  models: {
+  timestamp?: number;
+  models?: {
     binary: string;
     multiclass: string;
     anomaly: string;
@@ -84,4 +84,65 @@ export async function downloadCsv(filename: string): Promise<Blob> {
     throw new Error('Failed to download CSV file');
   }
   return response.blob();
+}
+
+/**
+ * Live Monitoring API Types
+ */
+export interface LiveStatusResponse {
+  running: boolean;
+  last_capture: string | null;
+  flows: number;
+  summary: {
+    BENIGN: number;
+    ANOMALY: number;
+    ATTACK: number;
+  };
+  attack_types?: Record<string, number>;
+  all_flows?: FlowData[];
+}
+
+/**
+ * Start live network monitoring
+ */
+export async function startLiveMonitoring(): Promise<{ status: string }> {
+  const response = await fetch(`${API_BASE_URL}/start_live`, {
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: 'Failed to start live monitoring' }));
+    throw new Error(error.detail || `HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Stop live network monitoring
+ */
+export async function stopLiveMonitoring(): Promise<{ status: string }> {
+  const response = await fetch(`${API_BASE_URL}/stop_live`, {
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: 'Failed to stop live monitoring' }));
+    throw new Error(error.detail || `HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Get current live monitoring status
+ */
+export async function getLiveStatus(): Promise<LiveStatusResponse> {
+  const response = await fetch(`${API_BASE_URL}/live_status`);
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
 }
