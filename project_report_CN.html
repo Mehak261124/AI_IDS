@@ -233,24 +233,24 @@
         }
 
         .attack-types {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
             margin: 30px 0;
         }
 
-        .attack-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border-top: 5px solid #ff6b6b;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .attack-section {
+            margin: 40px 0;
         }
 
-        .attack-card h4 {
-            color: #ff6b6b;
-            font-size: 1.3em;
-            margin-bottom: 12px;
+        .attack-section h4 {
+            color: #0f4c75;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .dos-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
         }
 
         .challenge-item {
@@ -304,7 +304,6 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin: 20px 0;
-
         }
 
         .preprocessing-step {
@@ -320,6 +319,12 @@
             margin-bottom: 8px;
         }
 
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
 
         ul, ol {
             margin-left: 30px;
@@ -352,6 +357,18 @@
 
             .section {
                 padding: 30px 20px;
+            }
+
+            .dos-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .two-column-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .preprocessing-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -443,7 +460,7 @@
             <div class="image-container">
                 <img src="assets/system_architecture.png" alt="System Architecture Diagram">
                 <p class="caption">
-                    Figure 1: Complete AI-IDS Pipeline: Packet Capture &rarr; Flow Extraction &rarr; Preprocessing &rarr; Tiered AI Classification
+                    Figure 1: Complete AI-IDS Pipeline: Packet Capture → Flow Extraction → Preprocessing → Tiered AI Classification
                 </p>
             </div>
 
@@ -485,45 +502,26 @@
 
             <h3>Pre-processing and Feature Engineering (The Critical Steps)</h3>
             <div class="preprocessing-grid">
-
                 <div class="preprocessing-step">
-                  <h4>1. Data Cleaning &amp; Downsampling</h4>
-                  <p>
-                    Handling of &infin; values, dropping NaNs, and removing network identifiers (IPs, Ports).
-                    Benign flows were <strong>downsampled</strong> to 1.2× the attack count to manage severe class imbalance.
-                  </p>
+                    <h4>1. Data Cleaning & Downsampling</h4>
+                    <p>Handling of ∞ values, dropping NaNs, and removing network identifiers (IPs, Ports). Benign flows were <strong>downsampled</strong> to 1.2× the attack count to manage severe class imbalance.</p>
                 </div>
               
                 <div class="preprocessing-step">
-                  <h4>2. Standard Scaling</h4>
-                  <p>
-                    <strong>Z-score normalization</strong> was applied to all 77 features.
-                    This standardizes features to μ = 0 and σ = 1, which is crucial for algorithms reliant on distance metrics (like K-Means and PCA).
-                  </p>
+                    <h4>2. Standard Scaling</h4>
+                    <p><strong>Z-score normalization</strong> was applied to all 77 features. This standardizes features to μ = 0 and σ = 1, which is crucial for algorithms reliant on distance metrics (like K-Means and PCA).</p>
                 </div>
               
                 <div class="preprocessing-step">
-                  <h4>3. K-Means Clustering <strong>(Feature Engineering)</strong></h4>
-                  <p>
-                    Cluster labels (6 for binary, 10 for multiclass) were generated and added as a
-                    <strong>new, engineered feature</strong>.
-                    This helps the model separate attacks with similar low-level statistics.
-                  </p>
+                    <h4>3. K-Means Clustering <strong>(Feature Engineering)</strong></h4>
+                    <p>Cluster labels (6 for binary, 10 for multiclass) were generated and added as a <strong>new, engineered feature</strong>. This helps the model separate attacks with similar low-level statistics.</p>
                 </div>
               
                 <div class="preprocessing-step">
-                  <h4>4. PCA Dimensionality Reduction</h4>
-                  <p>
-                    Reduced the 78 features (77 original + 1 cluster ID) to
-                    <strong>20 Principal Components (PCs)</strong>.
-                    This minimizes computational load and overfitting risk while
-                    <strong>retaining over 95% of the data variance</strong>.
-                  </p>
+                    <h4>4. PCA Dimensionality Reduction</h4>
+                    <p>Reduced the 78 features (77 original + 1 cluster ID) to <strong>20 Principal Components (PCs)</strong>. This minimizes computational load and overfitting risk while <strong>retaining over 95% of the data variance</strong>.</p>
                 </div>
-              
-              </div>
-              
-
+            </div>
         </section>
 
         <section class="section" id="features">
@@ -550,32 +548,171 @@
             
             <h3>Attack Detection Patterns <strong>(Behavioral Fingerprinting)</strong></h3>
             <div class="attack-types">
-                <div class="attack-card">
-                    <h4>DoS / DDoS</h4>
-                    <p><strong>Fingerprint:</strong> Extremely <strong>low Flow Inter-Arrival Time</strong> (IAT), coupled with high <strong>Packets/s</strong> and specific <strong>TCP flag combinations</strong>.</p>
+                <div class="attack-section">
+                    <h4>🔹 DoS / DDoS Attacks</h4>
+                    <div class="dos-layout">
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Normal Value</th>
+                                        <th>Attack Value</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Flow Packets/s</td><td>10–100</td><td>&gt;1000</td><td>Packet flood</td></tr>
+                                    <tr><td>Flow Bytes/s</td><td>1K–100K</td><td>&gt;1M</td><td>Bandwidth exhaustion</td></tr>
+                                    <tr><td>Flow IAT Mean</td><td>10–1000 ms</td><td>&lt;1 ms</td><td>Rapid-fire packets</td></tr>
+                                    <tr><td>SYN Flag Count</td><td>1–5</td><td>&gt;100</td><td>SYN flood</td></tr>
+                                    <tr><td>Bwd IAT Max</td><td>&lt;500 ms</td><td>&gt;5000 ms</td><td>Server delay under load</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Attack Type</th>
+                                        <th>Signature</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Hulk</td><td>Highest Packets/s + Bytes/s</td></tr>
+                                    <tr><td>GoldenEye</td><td>Keep-alive abuse + High Active Mean</td></tr>
+                                    <tr><td>Slowloris</td><td>Long Duration, low packets</td></tr>
+                                    <tr><td>Slowhttptest</td><td>Slow headers + Idle Max high</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="attack-card">
-                    <h4>PortScan</h4>
-                    <p><strong>Fingerprint:</strong> Many short flows (low <strong>Total Fwd Packets</strong>), high count of flows with only <strong>SYN</strong> flags set (unsuccessful connection attempts).</p>
+
+                <div class="attack-section">
+                    <h4>🔹 Brute Force (FTP/SSH Patator)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Normal</th>
+                                <th>FTP-Patator</th>
+                                <th>SSH-Patator</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Fwd Packets/s</td><td>&lt;10</td><td>&gt;50</td><td>&gt;50</td><td>Repeated login attempts</td></tr>
+                            <tr><td>Flow Duration</td><td>Variable</td><td>&lt;100 ms</td><td>&lt;100 ms</td><td>Short failed connections</td></tr>
+                            <tr><td>RST Flag Count</td><td>0–1</td><td>&gt;10</td><td>&gt;10</td><td>Login failures</td></tr>
+                            <tr><td>Fwd Packet Len Mean</td><td>500–1500</td><td>&lt;200</td><td>&lt;150</td><td>Small command packets</td></tr>
+                            <tr><td>Destination Port</td><td>Any</td><td>21</td><td>22</td><td>Service fingerprint</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="attack-card">
-                    <h4>Botnet</h4>
-                    <p><strong>Fingerprint:</strong> Machine-like communication indicated by very low <strong>Flow IAT Standard Deviation</strong> (periodic C&C beacons) and highly predictable <strong>Packet Length Means</strong>.</p>
+
+                <div class="attack-section">
+                    <h4>🔹 Heartbleed (Memory Leak)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Normal HTTPS</th>
+                                <th>Heartbleed</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Fwd Packet Length Max</td><td>100–500</td><td>&lt;100</td><td>Small malformed request</td></tr>
+                            <tr><td>Bwd Packet Length Max</td><td>500–1500</td><td>&gt;64000</td><td>Memory dump</td></tr>
+                            <tr><td>Total Length Bwd Packets</td><td>&lt;10KB</td><td>&gt;64KB</td><td>Huge leaked response</td></tr>
+                            <tr><td>Packet Length Variance</td><td>Low</td><td>Very High</td><td>Size asymmetry</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="attack-card">
-                    <h4>Heartbleed</h4>
-                    <p><strong>Fingerprint:</strong> <strong>Asymmetry:</strong> Small request packet &rarr; Huge response packet. High <strong>Bwd Packet Length Max</strong> (signifying a large response size).</p>
+
+                <div class="attack-section">
+                    <h4>🔹 Web Attacks (XSS / SQLi / Web Brute Force)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Attack Type</th>
+                                <th>Key Features</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>XSS</td><td>High Fwd Packet Length Max, High PSH Count</td><td>Large JS payloads</td></tr>
+                            <tr><td>SQL Injection</td><td>High Fwd Len Max, High Bwd Len Max</td><td>SQL requests + DB errors</td></tr>
+                            <tr><td>Web Brute Force</td><td>High Fwd Packets/s, Repetitive lengths</td><td>Repeated login attempts</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="attack-card">
-                    <h4>Web Attacks (XSS/SQLi)</h4>
-                    <p><strong>Fingerprint:</strong> <strong>Large Payloads:</strong> <strong>Fwd Packet Length Max</strong> is higher than normal web requests due to long SQL strings or scripts being injected into parameters.</p>
+
+                 <div class="attack-section">
+                    <h4>🔹 PortScan</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Normal</th>
+                                <th>PortScan</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>SYN Flag Count</td><td>1 per flow</td><td>1 per port</td><td>Port probing</td></tr>
+                            <tr><td>Total Fwd Packets</td><td>5–100</td><td>1–3</td><td>SYN-only probes</td></tr>
+                            <tr><td>Total Bwd Packets</td><td>5–100</td><td>0–2</td><td>RST responses</td></tr>
+                            <tr><td>Flow Duration</td><td>Seconds</td><td>&lt; 10 ms</td><td>Extremely short scans</td></tr>
+                            <tr><td>Min Packet Length</td><td>&gt; 60 bytes</td><td>&lt; 54 bytes</td><td>Small SYN probes</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="attack-card">
-                    <h4>Infiltration</h4>
-                    <p><strong>Fingerprint:</strong> <strong>Upload Heavy:</strong> <strong>Subflow Fwd Bytes</strong> (Data leaving network) &rarr; <strong>Subflow Bwd Bytes</strong> (Data entering), indicating mass data exfiltration.</p>
+
+                <div class="attack-section">
+                    <h4>🔹 Botnet (ARES)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Human Traffic</th>
+                                <th>Botnet</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Flow IAT Std</td><td>High variance</td><td>Very low</td><td>Periodic C2 beacons</td></tr>
+                            <tr><td>Packet Length Mean</td><td>Variable</td><td>Consistent</td><td>Scripted command sizes</td></tr>
+                            <tr><td>Subflow Fwd Packets</td><td>Random</td><td>Periodic</td><td>Robot-like behavior</td></tr>
+                            <tr><td>Active Mean</td><td>Bursty</td><td>Regular</td><td>Fixed command intervals</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </section>
+
+                <div class="attack-section">
+                    <h4>🔹 Infiltration (Data Exfiltration)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Normal Upload</th>
+                                <th>Exfiltration</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Total Length Fwd Packets</td><td>&lt; 1MB</td><td>&gt; 10MB</td><td>Massive outbound flow</td></tr>
+                            <tr><td>Fwd Avg Bytes/Bulk</td><td>N/A</td><td>&gt; 1000</td><td>Large continuous chunks</td></tr>
+                            <tr><td>Subflow Fwd Bytes</td><td>&lt; 100KB</td><td>&gt; 1MB</td><td>High-volume outbound bursts</td></tr>
+                            <tr><td>Flow Bytes/s</td><td>&lt; 10KB/s</td><td>&gt; 100KB/s</td><td>High-speed data exfiltration</td></tr>
+                        </tbody>
+                    </table>
+                    <p>These characteristics reveal long, high-bandwidth uploads typical of malware-driven exfiltration.</p>
+                </div>
+
+            </div> 
+        </section> 
         
 
         <section class="section" id="demo">
