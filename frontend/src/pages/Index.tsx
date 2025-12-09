@@ -261,7 +261,7 @@ const Index = () => {
         <footer className="relative z-10 border-t border-border/50 bg-background/80 backdrop-blur-sm py-4">
           <div className="container mx-auto px-4 text-center">
             <p className="text-xs text-muted-foreground font-mono">
-              AI-IDS v1.0 • Powered by Machine Learning • © 2024
+              AI-IDS v1.0 • Powered by Machine Learning • © 2025
             </p>
           </div>
         </footer>
