@@ -399,29 +399,43 @@
         </div>
 
         <section class="section" id="problem">
-            <h2>2. Problem Statement: <strong>The DPI Blind Spot</strong></h2>
-            
-            <div class="problem-solution">
-                <div class="problem-box">
-                    <h3>🚨 The Challenge: Deep Packet Inspection (DPI) Failure</h3>
-                    <ul>
-                        <li><strong>90%+ of web traffic is encrypted</strong> (HTTPS/TLS), rendering traditional Deep Packet Inspection (DPI) useless.</li>
-                        <li><strong>Signature-based IDSs</strong> are inherently blind to <strong>Zero-Day attacks</strong> (novel threats).</li>
-                        <li><strong>Privacy vs. Security:</strong> Decrypting traffic (MITM) introduces <strong>latency</strong> and violates <strong>privacy</strong> (GDPR).</li>
-                        <li><strong>Complex Attacks:</strong> Modern threats use stealth and behavioral patterns that evade simple rule-sets.</li>
-                    </ul>
+            <h2>2. Problem Statement: <strong>The Modern Network Security Gap</strong></h2>
+                <div class="problem-solution">
+                    
+                    <!-- PROBLEM SECTION -->
+                    <div class="problem-box">
+                        <h3>🚨 The Challenge: Why Traditional IDS Fails in Modern Networks</h3>
+                        <ul>
+                            <li><strong>90%+ of today’s internet traffic is encrypted</strong> (HTTPS/TLS), making packet inspection ineffective.</li>
+                            <li><strong>DPI (Deep Packet Inspection)</strong> cannot read encrypted payloads → huge blind spot.</li>
+                            <li><strong>Signature-based IDS</strong> only detects known attacks → completely misses <strong>Zero-Day and variant attacks</strong>.</li>
+                            <li>Decrypting traffic (MITM) breaks <strong>privacy laws</strong> and introduces <strong>latency + overhead</strong>.</li>
+                            <li>Modern attacks behave like normal traffic (low-and-slow patterns), easily bypassing rule-based systems.</li>
+                            <li>Enterprises face <strong>high false positives</strong> → alert fatigue → attacks slip through.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SOLUTION SECTION -->
+                    <div class="solution-box">
+                        <h3>✅ Our Solution: Flow-Based, Encryption-Agnostic AI IDS</h3>
+                        <ul>
+                            <li><strong>Flow-Level Feature Analysis:</strong> Instead of reading payloads, we analyze metadata such as packet size, timing, flags, byte ratio, and duration.</li>
+                            <li>Flow features remain <strong>fully visible even in encrypted traffic</strong> → no DPI needed.</li>
+                            <li><strong>AI-Based Detection Pipeline:</strong>
+                                <ul>
+                                    <li>Stage 1 → <strong>XGBoost Binary Classifier</strong>: Detects attack vs benign</li>
+                                    <li>Stage 2 → <strong>XGBoost Multiclass Classifier</strong>: Identifies 14 attack categories</li>
+                                    <li>Stage 3 → <strong>Autoencoder</strong>: Flags unknown or zero-day anomalies</li>
+                                </ul>
+                            </li>
+                            <li><strong>Privacy-Preserving:</strong> No payload, no decryption → fully compliant with GDPR & corporate policies.</li>
+                            <li><strong>Real-Time Detection:</strong> Flow metadata is lightweight → fast processing & deployment friendly.</li>
+                            <li><strong>Zero-Day Protection:</strong> Unsupervised anomaly detection identifies behavior deviations never seen before.</li>
+                        </ul>
+                    </div>
+
                 </div>
-                
-                <div class="solution-box">
-                    <h3>✅ Our Solution: Encryption-Agnostic Flow Analysis</h3>
-                    <ul>
-                        <li><strong>Flow-Based Analysis:</strong> Analyze only aggregated <strong>metadata</strong> (packet size, timing, flags), which are <strong>visible</strong> even when the payload is encrypted.</li>
-                        <li><strong>AI-Powered Detection:</strong> XGBoost detects complex <strong>behavioral patterns</strong> and <strong>statistical anomalies</strong>.</li>
-                        <li><strong>Privacy-Preserving:</strong> No payload data is ever required or decrypted.</li>
-                        <li><strong>Zero-Day Protection:</strong> Anomaly detection catches <strong>novel attacks</strong> by flagging flows that deviate from normal network behavior.</li>
-                    </ul>
-                </div>
-            </div>
+
         </section>
 
         <section class="section" id="solution">
