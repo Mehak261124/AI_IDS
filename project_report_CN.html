@@ -829,9 +829,31 @@
         <section class="section" id="challenges">
             <h2>9. Challenges & Future Scope</h2>
             
+            <h3>🛠️ Major Technical Challenges</h3>
+            
             <div class="challenge-item">
-                <h4>Challenges: Data Imbalance & Feature Complexity</h4>
-                <p>The vast difference between benign and attack samples was handled through specific oversampling/capping techniques. The high dimensionality was managed using PCA and K-Means feature engineering.</p>
+                <h4>Challenge 1: Training-Testing Mismatch (Domain Shift)</h4>
+                <p>The <strong>feature distribution</strong> of live data (home/campus WiFi, different IPs/OSes) varied significantly from the controlled, <strong>lab-captured data</strong> (CICIDS2017). This "Domain Shift" caused the model to struggle with generalization.</p>
+            </div>
+
+            <div class="challenge-item">
+                <h4>Challenge 2: Missing Features & Data Integrity</h4>
+                <p>Crucial features (like <strong>Source/Destination Port</strong>) were found to be missing or zeroed out in live flow extraction due to tool/network limitations. This directly impacted detection logic, as essential context (e.g., knowing a port is 80 or 443) was lost.</p>
+            </div>
+
+            <div class="challenge-item">
+                <h4>Challenge 3: Threshold Sensitivity (Autoencoder)</h4>
+                <p>The fixed anomaly threshold, calculated during training, often led to high <strong>False Positive</strong> rates in production. The solution required exploring <strong>dynamic</strong> and <strong>percentile-based thresholds</strong> to adapt to the shifting definition of "normal" behavior in live traffic.</p>
+            </div>
+
+            <div class="challenge-item">
+                <h4>Challenge 4: Reproducibility Issues</h4>
+                <p>Tiny variances in <strong>floating point precision</strong> (e.g., between macOS and Windows) or <strong>library version</strong> differences resulted in inconsistent prediction scores near the decision boundary. The solution involved using <strong>Docker</strong> for environment control and setting explicit <strong>random seeds</strong>.</p>
+            </div>
+            
+            <div class="challenge-item">
+                <h4>Challenge 5: Live Traffic Characteristics</h4>
+                <p>Due to the rarity of attacks in real-world scenarios and <strong>ethical constraints</strong>, testing the IDS required specific workarounds, primarily <strong>replaying labeled attack PCAPs</strong> in isolated test environments.</p>
             </div>
 
             <div class="challenge-item" style="border-left: 5px solid #27ae60;">
